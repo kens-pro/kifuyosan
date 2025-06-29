@@ -20,7 +20,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
@@ -182,6 +182,122 @@
             color: white;
         }
 
+        /* 外注サービス比較セクション */
+        .outsourcing-section {
+            margin-top: 4rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title p {
+            font-size: 1.125rem;
+            color: #64748b;
+        }
+
+        .outsourcing-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .outsourcing-header {
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            padding: 2rem;
+            color: white;
+        }
+
+        .outsourcing-table {
+            overflow-x: auto;
+        }
+
+        .outsourcing-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .outsourcing-table th {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 1.5rem 1rem;
+            text-align: left;
+            font-weight: 700;
+            color: #374151;
+            border-bottom: 2px solid #e5e7eb;
+            font-size: 0.95rem;
+        }
+
+        .outsourcing-table td {
+            padding: 1.5rem 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: top;
+            transition: all 0.2s ease;
+        }
+
+        .outsourcing-table tr:hover td {
+            background-color: #f8fafc;
+        }
+
+        .service-name {
+            font-weight: 700;
+            color: #1e40af;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .service-subtitle {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .service-features {
+            color: #374151;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .service-target {
+            color: #059669;
+            font-weight: 600;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .service-price {
+            font-weight: 700;
+            color: #dc2626;
+            font-size: 1rem;
+        }
+
+        .price-detail {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .service-row-coconala {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+        }
+
+        .service-row-campfire {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        }
+
+        .service-row-freelance {
+            background: linear-gradient(135deg, #e9d5ff, #d8b4fe);
+        }
+
         .info-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -279,6 +395,15 @@
             margin-left: 1rem;
         }
 
+        .highlight-animation {
+            animation: highlight 2s ease-in-out;
+        }
+
+        @keyframes highlight {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 1rem 0.5rem;
@@ -290,6 +415,10 @@
 
             .subtitle {
                 font-size: 1.125rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.75rem;
             }
 
             .budget-row {
@@ -323,15 +452,25 @@
                 margin-left: 0;
                 margin-top: 0.5rem;
             }
+
+            .outsourcing-table {
+                font-size: 0.875rem;
+            }
+
+            .outsourcing-table th,
+            .outsourcing-table td {
+                padding: 1rem 0.75rem;
+            }
+
+            .service-name {
+                font-size: 1rem;
+            }
         }
 
-        .highlight-animation {
-            animation: highlight 2s ease-in-out;
-        }
-
-        @keyframes highlight {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+        @media (max-width: 640px) {
+            .outsourcing-table table {
+                min-width: 800px;
+            }
         }
     </style>
 </head>
@@ -411,8 +550,6 @@
                     <span class="amount">¥698,500</span>
                 </div>
 
-               
-
                 <div class="budget-row platform-fee">
                     <span class="category">
                         CAMPFIRE手数料（概算17%）
@@ -435,6 +572,99 @@
                         CAMPFIRE支援総額目標
                     </span>
                     <span class="amount">¥841,566</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 外注サービス比較セクション -->
+        <div class="outsourcing-section">
+            <div class="section-title">
+                <h2>外注する場合のパターン</h2>
+                <p>クラウドファンディング制作を外部に依頼する際の選択肢と費用比較</p>
+            </div>
+
+            <div class="outsourcing-card">
+                <div class="outsourcing-header">
+                    <h2 class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 28px; height: 28px;">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        制作サービス比較表
+                    </h2>
+                </div>
+
+                <div class="outsourcing-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>サービス名</th>
+                                <th>特徴</th>
+                                <th>向いている人</th>
+                                <th>市場価格（目安）</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="service-row-coconala">
+                                <td>
+                                    <div class="service-name">coconala</div>
+                                    <div class="service-subtitle">（ココナラ）</div>
+                                </td>
+                                <td class="service-features">
+                                    実績・価格帯を見ながら選べる。クラファン構成・デザイン専門家も多数登録。評価も見られる
+                                </td>
+                                <td class="service-target">
+                                    初めての依頼で安心したい人／予算を抑えたい人
+                                </td>
+                                <td>
+                                    <div class="service-price">¥5,000〜¥80,000</div>
+                                    <div class="price-detail">
+                                        構成のみ¥20,000前後<br>
+                                        画像制作¥5,000〜15,000
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="service-row-campfire">
+                                <td>
+                                    <div class="service-name">CAMPFIRE Creators</div>
+                                    <div class="service-subtitle">（伴走プラン）</div>
+                                </td>
+                                <td class="service-features">
+                                    CAMPFIREと提携したプロチームが構成〜撮影〜運営まで一括対応
+                                </td>
+                                <td class="service-target">
+                                    全て任せたい／広報やSNS運用も含めた手厚いサポートが欲しい人
+                                </td>
+                                <td>
+                                    <div class="service-price">¥100,000〜300,000超</div>
+                                    <div class="price-detail">
+                                        伴走プラン／契約制もあり
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="service-row-freelance">
+                                <td>
+                                    <div class="service-name">フリーランス紹介</div>
+                                    <div class="service-subtitle">（個別契約）</div>
+                                </td>
+                                <td class="service-features">
+                                    実績あるデザイナーや構成担当を指名して直接依頼。高品質で自由度も高い
+                                </td>
+                                <td class="service-target">
+                                    内容が固まっていて、指示が明確に出せる人
+                                </td>
+                                <td>
+                                    <div class="service-price">¥30,000〜¥150,000</div>
+                                    <div class="price-detail">
+                                        構成＋画像＋サムネ一式：<br>
+                                        ¥70,000前後が相場
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
