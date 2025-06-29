@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wrapiクラウドファンディング - 資金計画</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+        }
+
+        .header-icon svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+
+        .main-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .budget-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            padding: 2rem;
+            color: white;
+        }
+
+        .card-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .budget-table {
+            width: 100%;
+        }
+
+        .budget-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2rem;
+            border-bottom: 1px solid #f1f5f9;
+            transition: all 0.2s ease;
+        }
+
+        .budget-row:hover {
+            background-color: #f8fafc;
+            transform: translateX(4px);
+        }
+
+        .budget-row.subtotal {
+            background-color: #f8fafc;
+            font-weight: 600;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .budget-row.tax {
+            background-color: #fef3c7;
+        }
+
+        .budget-row.total-expenses {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            font-weight: 700;
+            border-top: 3px solid #3b82f6;
+        }
+
+        .budget-row.target-amount {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            font-weight: 800;
+            border-top: 3px solid #059669;
+        }
+
+        .budget-row.platform-fee {
+            background-color: #fef3c7;
+        }
+
+        .budget-row.final-total {
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            color: white;
+            font-weight: 800;
+            border: none;
+        }
+
+        .category {
+            font-size: 1rem;
+            color: #374151;
+            font-weight: 500;
+        }
+
+        .budget-row.subtotal .category,
+        .budget-row.total-expenses .category,
+        .budget-row.target-amount .category,
+        .budget-row.final-total .category {
+            font-size: 1.125rem;
+            font-weight: 700;
+        }
+
+        .budget-row.target-amount .category {
+            color: #065f46;
+        }
+
+        .budget-row.final-total .category {
+            color: white;
+        }
+
+        .amount {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .budget-row.subtotal .amount,
+        .budget-row.total-expenses .amount {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e40af;
+        }
+
+        .budget-row.target-amount .amount {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #059669;
+        }
+
+        .budget-row.final-total .amount {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .info-card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .info-card-icon.blue {
+            background-color: #dbeafe;
+        }
+
+        .info-card-icon.green {
+            background-color: #d1fae5;
+        }
+
+        .info-card-icon.purple {
+            background-color: #e9d5ff;
+        }
+
+        .info-card-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .info-card-icon.blue svg {
+            color: #3b82f6;
+        }
+
+        .info-card-icon.green svg {
+            color: #059669;
+        }
+
+        .info-card-icon.purple svg {
+            color: #7c3aed;
+        }
+
+        .info-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+
+        .info-card p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .target-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #059669;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+
+        .platform-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f59e0b;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0.5rem;
+            }
+
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.125rem;
+            }
+
+            .budget-row {
+                padding: 1rem 1.5rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .budget-row.final-total,
+            .budget-row.target-amount,
+            .budget-row.total-expenses {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .amount {
+                font-size: 1rem;
+            }
+
+            .budget-row.target-amount .amount {
+                font-size: 1.25rem;
+            }
+
+            .budget-row.final-total .amount {
+                font-size: 1.5rem;
+            }
+
+            .target-badge,
+            .platform-badge {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+        }
+
+        .highlight-animation {
+            animation: highlight 2s ease-in-out;
+        }
+
+        @keyframes highlight {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <path d="M9 9h6v6H9z"/>
+                </svg>
+            </div>
+            <h1 class="main-title">Wrapiクラウドファンディング</h1>
+            <p class="subtitle">プロジェクト実現のための詳細な資金計画と目標金額</p>
+        </div>
+
+        <!-- Main Budget Table -->
+        <div class="budget-card">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 28px; height: 28px;">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 1v6m0 6v6"/>
+                        <path d="m21 12-6-3-6 3-6-3"/>
+                    </svg>
+                    費用内訳と目標金額
+                </h2>
+            </div>
+
+            <div class="budget-table">
+                <div class="budget-row">
+                    <span class="category">ラッピング製作費（税抜）</span>
+                    <span class="amount">¥300,000</span>
+                </div>
+                <div class="budget-row">
+                    <span class="category">移動費用（10回分）</span>
+                    <span class="amount">¥100,000</span>
+                </div>
+                <div class="budget-row">
+                    <span class="category">デザイン費用（外部相談料）</span>
+                    <span class="amount">¥50,000</span>
+                </div>
+                <div class="budget-row">
+                    <span class="category">SNS広告費</span>
+                    <span class="amount">¥80,000</span>
+                </div>
+                <div class="budget-row">
+                    <span class="category">撮影・記録・制作物費</span>
+                    <span class="amount">¥50,000</span>
+                </div>
+                <div class="budget-row">
+                    <span class="category">チラシ印刷・配布</span>
+                    <span class="amount">¥15,000</span>
+                </div>
+                <div class="budget-row">
+                    <span class="category">リターン準備費</span>
+                    <span class="amount">¥30,000</span>
+                </div>
+                <div class="budget-row">
+                    <span class="category">事務管理・通信費</span>
+                    <span class="amount">¥10,000</span>
+                </div>
+
+                <div class="budget-row subtotal">
+                    <span class="category">小計（税抜）</span>
+                    <span class="amount">¥635,000</span>
+                </div>
+
+                <div class="budget-row tax">
+                    <span class="category">消費税（10%＋ラッピング分）</span>
+                    <span class="amount">¥63,500</span>
+                </div>
+
+                <div class="budget-row total-expenses">
+                    <span class="category">経費合計（税込）</span>
+                    <span class="amount">¥698,500</span>
+                </div>
+
+                <div class="budget-row target-amount highlight-animation">
+                    <span class="category">
+                        必要な支援総額（目標金額）
+                        <span class="target-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+                                <path d="M9 11l3 3L22 4"/>
+                                <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                            </svg>
+                            目標
+                        </span>
+                    </span>
+                    <span class="amount">¥841,566</span>
+                </div>
+
+                <div class="budget-row platform-fee">
+                    <span class="category">
+                        CAMPFIRE手数料（概算17%）
+                        <span class="platform-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            手数料
+                        </span>
+                    </span>
+                    <span class="amount">¥143,066</span>
+                </div>
+
+                <div class="budget-row final-total highlight-animation">
+                    <span class="category">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 24px; height: 24px; margin-right: 8px;">
+                            <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/>
+                            <path d="M13 13l6 6"/>
+                        </svg>
+                        CAMPFIRE支援総額目標
+                    </span>
+                    <span class="amount">¥841,566</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Cards -->
+        <div class="info-cards">
+            <div class="info-card">
+                <div class="info-card-icon blue">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <path d="M9 9h6v6H9z"/>
+                    </svg>
+                </div>
+                <h3>透明性の高い資金計画</h3>
+                <p>すべての費用項目を詳細に公開し、支援者の皆様に安心をお届けします。明確な内訳により、資金の使途を明確化しています。</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-icon green">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11l3 3L22 4"/>
+                        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                    </svg>
+                </div>
+                <h3>明確な目標設定</h3>
+                <p>プロジェクト成功に必要な金額を正確に算出し、現実的で達成可能な目標を設定しています。</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-card-icon purple">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/>
+                        <path d="M13 13l6 6"/>
+                    </svg>
+                </div>
+                <h3>確実な実行計画</h3>
+                <p>手数料も含めた総合的な資金計画で、プロジェクトの確実な実現を目指します。リスクを最小限に抑えた計画です。</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
